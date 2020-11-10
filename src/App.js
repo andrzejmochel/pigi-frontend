@@ -53,7 +53,7 @@ function Home() {
           <img src={logo} className="App-logo" alt="logo" />
           <Counter />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit <code>src/App.js</code> and save to reload. test pipline.
           </p>
           <span>
           <span>Learn </span>
