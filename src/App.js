@@ -56,7 +56,7 @@ function Home() {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <span>
-          <span>Learn </span>
+          <span>Learn 1</span>
           <a
               className="App-link"
               href="https://reactjs.org/"
