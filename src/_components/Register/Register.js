@@ -38,13 +38,20 @@ class Register extends React.Component {
             </div>
         );
     }
+
+    componentDidMount() {
     }
 
-    function mapStateToProps(state) {
+    componentWillUnmount() {
+    }
+}
+
+function mapStateToProps(state) {
 
     return {
+        state: state
     };
-    }
+}
 
-    const connectedRegister = connect(mapStateToProps)(Register);
-    export {connectedRegister as Register};
+const connectedRegister = connect(mapStateToProps)(Register);
+export {connectedRegister as Register};

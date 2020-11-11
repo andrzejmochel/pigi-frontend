@@ -19,6 +19,12 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+    }
+
+    componentWillUnmount() {
+    }
+
     render() {
         return (
             <div className="auth-wrapper">
@@ -72,9 +78,8 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-    // const { loggingIn } = state.authentication;
     return {
-        //loggingIn
+       state: state
     };
 }
 
