@@ -1,3 +1,9 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "amochel@gmail.com",
+      "password": "$2a$10$Obab3uinAE31JtT7QhnSIOr3mUw1DqIIwhFBhXfmrKejcOp62aRGy",
+      "id": 1
+    }
+  ]
 }
