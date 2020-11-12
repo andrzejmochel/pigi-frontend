@@ -2,11 +2,11 @@ import React from 'react';
 
 import {Link, Route, Switch} from "react-router-dom";
 import './App.css';
-import {PrivateRoute} from "./_components/PrivateRoute";
-import {Home} from "./_components/Home";
-import {Login} from "./_components/Login";
+import {PrivateRoute} from "./components/PrivateRoute";
+import {Home} from "./components/Home";
+import {Login} from "./components/Login";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {Register} from "./_components/Register";
+import {Register} from "./components/SignUp";
 
 
 export default function App() {
