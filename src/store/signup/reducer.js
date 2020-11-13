@@ -2,7 +2,8 @@ import {types} from "./index";
 import produce from "immer";
 
 const initialState = {
-    isFetching: false
+    isFetching: false,
+
 }
 
 export default function asyncUserReducer(state = initialState, action) {

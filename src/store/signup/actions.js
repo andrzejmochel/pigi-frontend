@@ -7,17 +7,21 @@ const signUpRequest = function (singUp) {
     }
 }
 
-const singUpFailure = function () {
+const singUpFailure = function (e) {
     return {
         type: types.SIGNUP_FAILURE,
-        payload: {}
+        payload: {
+            error: e
+        }
     }
 }
 
-const singUpSuccess = function () {
+const singUpSuccess = function (email) {
     return {
         type: types.SIGNUP_SUCCESS,
-        payload: {}
+        payload: {
+            email: email
+        }
     }
 }
 
