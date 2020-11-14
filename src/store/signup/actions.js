@@ -7,6 +7,20 @@ const signUpRequest = function (singUp) {
     }
 }
 
+const signUpGoogleRequest = function (singUp) {
+    return {
+        type: types.SIGNUP_GOOGLE_REQUEST,
+        payload: singUp
+    }
+}
+
+const signUpFacebookRequest = function (singUp) {
+    return {
+        type: types.SIGNUP_FACEBOOK_REQUEST,
+        payload: singUp
+    }
+}
+
 const singUpFailure = function (e) {
     return {
         type: types.SIGNUP_FAILURE,
@@ -28,7 +42,9 @@ const singUpSuccess = function (email) {
 const actions = {
     signUpRequest,
     singUpFailure,
-    singUpSuccess
+    singUpSuccess,
+    signUpFacebookRequest,
+    signUpGoogleRequest
 }
 
 export default actions;

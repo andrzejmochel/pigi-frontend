@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {actions as signUpActions} from "../../store/signup"
+import GoogleLogin from "react-google-login";
+import {FACEBOOK_APP_ID, GOOGLE_CLIENT_ID} from "../../SSO";
+import FacebookLogin from "react-facebook-login"
 
 class SignUp extends React.Component {
 
@@ -13,12 +16,13 @@ class SignUp extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.googleRegister = this.googleRegister.bind(this);
+        this.facebookRegister = this.facebookRegister.bind(this);
     }
 
     handleSubmit(event) {
-        debugger;
         this.props.actions.signUpRequest({
-            email: this.state.email,
+            username: this.state.email,
             password: this.state.password
         });
         event.preventDefault();
@@ -27,6 +31,21 @@ class SignUp extends React.Component {
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
+        })
+    }
+
+
+    googleRegister(googleResponse) {
+        this.props.actions.signUpGoogleRequest({
+            username: googleResponse.profileObj.email,
+            id: googleResponse.profileObj.googleId,
+         })
+    }
+
+    facebookRegister(facebookResponse) {
+        this.props.actions.signUpFacebookRequest({
+            username: facebookResponse.email,
+            id: facebookResponse.id,
         })
     }
 
@@ -66,12 +85,26 @@ class SignUp extends React.Component {
                                    className="form-control"
                                    placeholder="Wprowadź hasło"/>
                         </div>
-
                         <button type="submit" className="btn btn-primary btn-block">Zarejestruj się</button>
+                        <GoogleLogin clientId={GOOGLE_CLIENT_ID}
+                                     onSuccess={this.googleRegister}
+                                     icon={true}
+                                     style={{}}
+                                     buttonText={"Google"}
+                        >
+                        </GoogleLogin>
+                        <FacebookLogin
+                            appId={FACEBOOK_APP_ID}
+                            autoLoad={true}
+                            fields="email"
+                            callback={this.facebookRegister}
+                        />
+
                         <p className="forgot-password text-right">
                             Jesteś już zarejestrowany <a href="#">zaloguj?</a>
                         </p>
                     </form>
+
                 </div>
             </div>
         );
@@ -88,6 +121,14 @@ const mapDispatchToProps = dispatch => ({
     actions: {
         signUpRequest(signUp) {
             dispatch(signUpActions.signUpRequest(signUp));
+        },
+
+        signUpFacebookRequest(signUp) {
+            dispatch(signUpActions.signUpFacebookRequest(signUp));
+        },
+
+        signUpGoogleRequest(signUp) {
+            dispatch(signUpActions.signUpGoogleRequest(signUp));
         }
     }
 });

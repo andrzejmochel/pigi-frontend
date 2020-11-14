@@ -13,10 +13,35 @@ function* signUpRequest(action) {
     }
 }
 
+function* signUpGoogleRequest(action) {
+    try {
+        yield signupApiService.signupGoogle(action.payload);
+        yield put(actions.singUpSuccess(action.payload.email));
+    } catch (e) {
+        yield put(actions.singUpFailure(e));
+    }
+}
+
+function* signUpFacebookRequest(action) {
+    try {
+        yield signupApiService.signupFacebook(action.payload);
+        yield put(actions.singUpSuccess(action.payload.email));
+    } catch (e) {
+        yield put(actions.singUpFailure(e));
+    }
+}
+
 function* sagaSignUpRequest() {
     yield takeLatest(types.SIGNUP_REQUEST, signUpRequest)
 }
 
+function* sagaSignUpGoogleRequest() {
+    yield takeLatest(types.SIGNUP_GOOGLE_REQUEST, signUpGoogleRequest)
+}
+
+function* sagaSignUpFacebookRequest() {
+    yield takeLatest(types.SIGNUP_FACEBOOK_REQUEST, signUpFacebookRequest)
+}
 function* signUpSuccess(email) {
     yield history.push('/login');
 }
@@ -27,7 +52,9 @@ function* sagaSignUpSuccess() {
 
 const sagas = {
     sagaSignUpRequest,
-    sagaSignUpSuccess
+    sagaSignUpSuccess,
+    sagaSignUpFacebookRequest,
+    sagaSignUpGoogleRequest
 }
 
 export default sagas;
