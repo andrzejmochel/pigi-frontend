@@ -7,6 +7,8 @@ import {Home} from "./components/Home";
 import {Login} from "./components/Login";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Register} from "./components/SignUp";
+import {OrderRegister} from "./components/OrderRegister";
+import {OrderRegisterSuccess} from "./components/OrderRegisterSuccess";
 
 
 export default function App() {
@@ -32,6 +34,8 @@ export default function App() {
                 <PrivateRoute exact path="/" component={Home}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/sign-up" component={Register}/>
+                <Route path="/order-register/:id" component={OrderRegister}/>
+                <Route path="/order-register-success/:id" component={OrderRegisterSuccess}/>
             </Switch>
         </div>
 

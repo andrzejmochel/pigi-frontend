@@ -30,11 +30,12 @@ const singUpFailure = function (e) {
     }
 }
 
-const singUpSuccess = function (email) {
+const singUpSuccess = function (user, authorization) {
     return {
         type: types.SIGNUP_SUCCESS,
         payload: {
-            email: email
+            user: user,
+            authorization : authorization
         }
     }
 }

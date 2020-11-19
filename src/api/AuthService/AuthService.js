@@ -7,7 +7,11 @@ class AuthService {
 
     getAuthHeader() {
         const val = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
-        return val ? { "Authorization": val.authHeader } : {};
+        return val ? { "Authorization": val.authorization } : {};
+    }
+
+    saveAuth(val) {
+        localStorage.setItem(AUTH_USER_KEY, val);
     }
 }
 

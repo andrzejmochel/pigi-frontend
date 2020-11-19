@@ -1,11 +1,14 @@
 import values from 'lodash/values';
 import reduce from 'lodash/reduce';
-import {sagas as signUpSagas}  from './signup'
+import {sagas as signUpSagas} from './signup'
+import {sagas as orderSagas} from './order'
+import {sagas as registrationsSagas} from './registrations'
 import { all, call } from 'redux-saga/effects';
 
-
 const allSagasMap = {
-    signUpSagas
+    signUpSagas,
+    orderSagas,
+    registrationsSagas
 };
 
 export default function* rootSaga() {

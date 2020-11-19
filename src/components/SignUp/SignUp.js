@@ -18,6 +18,7 @@ class SignUp extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.googleRegister = this.googleRegister.bind(this);
         this.facebookRegister = this.facebookRegister.bind(this);
+        this.googleRegisterFailure = this.googleRegisterFailure.bind(this)
     }
 
     handleSubmit(event) {
@@ -39,7 +40,7 @@ class SignUp extends React.Component {
         this.props.actions.signUpGoogleRequest({
             username: googleResponse.profileObj.email,
             id: googleResponse.profileObj.googleId,
-         })
+        })
     }
 
     facebookRegister(facebookResponse) {
@@ -50,6 +51,8 @@ class SignUp extends React.Component {
     }
 
     render() {
+        const googleButton = this.createGoogleButton();
+        const facebookButton = this.createFacebookButton();
         return (
             <div className="auth-wrapper">
                 <div className="auth-inner">
@@ -86,23 +89,10 @@ class SignUp extends React.Component {
                                    placeholder="Wprowadź hasło"/>
                         </div>
                         <button type="submit" className="btn btn-primary btn-block">Zarejestruj się</button>
-                        <GoogleLogin clientId={GOOGLE_CLIENT_ID}
-                                     onSuccess={this.googleRegister}
-                                     icon={true}
-                                     style={{}}
-                                     buttonText={"Google"}
-                        >
-                        </GoogleLogin>
-                        <FacebookLogin
-                            appId={FACEBOOK_APP_ID}
-                            autoLoad={true}
-                            fields="email"
-                            callback={this.facebookRegister}
-                        />
-
-                        <p className="forgot-password text-right">
-                            Jesteś już zarejestrowany <a href="#">zaloguj?</a>
-                        </p>
+                        <div>
+                            {googleButton}
+                            {facebookButton}
+                        </div>
                     </form>
 
                 </div>
@@ -110,10 +100,40 @@ class SignUp extends React.Component {
         );
     }
 
+    createGoogleButton() {
+        return (<GoogleLogin clientId={GOOGLE_CLIENT_ID}
+                             onSuccess={this.googleRegister}
+                             onFailure={this.googleRegisterFailure}
+                             icon={false}
+                             style={{}}
+                             className="btn btn-primary btn-block"
+                             buttonText={""}
+        >
+            <span className="">Google</span>
+        </GoogleLogin>);
+    }
+
+    createFacebookButton() {
+        try {
+            return (<FacebookLogin
+                appId={FACEBOOK_APP_ID}
+                autoLoad={true}
+                fields="email"
+                callback={this.facebookRegister}
+            />);
+        } catch (e) {
+            return null;
+        }
+    }
+
     componentDidMount() {
     }
 
     componentWillUnmount() {
+    }
+
+    googleRegisterFailure() {
+        console.log('googleRegisterFailure')
     }
 }
 
@@ -128,6 +148,7 @@ const mapDispatchToProps = dispatch => ({
         },
 
         signUpGoogleRequest(signUp) {
+            console.log("signUpGoogleRequest")
             dispatch(signUpActions.signUpGoogleRequest(signUp));
         }
     }

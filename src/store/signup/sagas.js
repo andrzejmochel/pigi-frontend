@@ -3,11 +3,12 @@ import {put, takeLatest} from "@redux-saga/core/effects";
 import types from "./types";
 import signupApiService from "../../api/signup.api.service"
 import history from "../../history";
+import AuthService from "../../api/AuthService/AuthService";
 
 function* signUpRequest(action) {
     try {
-        yield signupApiService.signup(action.payload);
-        yield put(actions.singUpSuccess(action.payload.email));
+        const authorization = yield signupApiService.signup(action.payload);
+        yield put(actions.singUpSuccess(action.payload, authorization));
     } catch (e) {
         yield put(actions.singUpFailure(e));
     }
@@ -15,8 +16,9 @@ function* signUpRequest(action) {
 
 function* signUpGoogleRequest(action) {
     try {
-        yield signupApiService.signupGoogle(action.payload);
-        yield put(actions.singUpSuccess(action.payload.email));
+        const authorization = yield signupApiService.signupGoogle(action.payload);
+        console.log('[SAGA] signUpGoogleRequest', authorization)
+        yield put(actions.singUpSuccess(action.payload, authorization));
     } catch (e) {
         yield put(actions.singUpFailure(e));
     }
@@ -24,8 +26,8 @@ function* signUpGoogleRequest(action) {
 
 function* signUpFacebookRequest(action) {
     try {
-        yield signupApiService.signupFacebook(action.payload);
-        yield put(actions.singUpSuccess(action.payload.email));
+        const authorization = yield signupApiService.signupFacebook(action.payload);
+        yield put(actions.singUpSuccess(action.payload, authorization));
     } catch (e) {
         yield put(actions.singUpFailure(e));
     }
@@ -36,14 +38,16 @@ function* sagaSignUpRequest() {
 }
 
 function* sagaSignUpGoogleRequest() {
+    console.log('sagaSignUpGoogleRequest');
     yield takeLatest(types.SIGNUP_GOOGLE_REQUEST, signUpGoogleRequest)
 }
 
 function* sagaSignUpFacebookRequest() {
     yield takeLatest(types.SIGNUP_FACEBOOK_REQUEST, signUpFacebookRequest)
 }
-function* signUpSuccess(email) {
-    yield history.push('/login');
+function* signUpSuccess(action) {
+    yield AuthService.saveAuth(action.payload)
+    yield history.push('/home');
 }
 
 function* sagaSignUpSuccess() {
