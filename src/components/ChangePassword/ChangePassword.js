@@ -5,13 +5,13 @@ import {actions as signInActions} from "../../store/signin";
 
 
 
-class Login extends React.Component {
+class ChangePassword extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.userNameRef = React.createRef();
         this.passwordRef = React.createRef();
+        this.repeatPasswordRef = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -27,17 +27,8 @@ class Login extends React.Component {
                 <div className="auth-inner">
                     <form onSubmit={this.handleSubmit}>
 
-                        <h3>Zaloguj się</h3>
+                        <h3>Zmień hasło</h3>
 
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                ref={this.userNameRef}
-                                className="form-control"
-                                placeholder="Wprowadź email"
-                            />
-                        </div>
 
                         <div className="form-group">
                             <label>Hasło</label>
@@ -48,10 +39,19 @@ class Login extends React.Component {
                                 placeholder="Wprowadź hasło"
                             />
                         </div>
-                        <button type="submit" className="btn btn-dark btn-lg btn-block">Zaloguj</button>
-                        <p className="forgot-password text-right">
-                            Zapomniałeś <Link  to={"/sign-up"}>hasła?</Link>
-                        </p>
+                        <div className="form-group">
+                            <label>Powtórz Hasło</label>
+                            <input
+                                ref={this.repeatPasswordRef}
+                                type="password"
+                                className="form-control"
+                                placeholder="Powtórz hasło"
+                            />
+                        </div>
+
+
+                        <button type="submit" className="btn btn-dark btn-lg btn-block">Zmień</button>
+
                     </form>
                 </div>
             </div>
@@ -61,34 +61,30 @@ class Login extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         try {
-            const userName = this.userNameRef.current.value;
             const password = this.passwordRef.current.value;
-            this.props.actions.signIn({
-                loginName : userName,
+            this.props.actions.changePassword({
                 password : password
             })
         } catch (e) {
             console.log(e)
         }
-
-
     }
 }
 
 function mapStateToProps(state) {
     return {
-       state: state
+        state: state
     };
 }
 
 const mapDispatchToProps = dispatch => ({
     actions: {
-        signIn(request) {
-            dispatch(signInActions.signInRequest(request));
+        changePassword(request) {
+            dispatch(signInActions.changePasswordRequest(request));
         }
 
     }
 });
 
-const connectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
-export {connectedLogin as Login};
+const connectedChangePassword = connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
+export {connectedChangePassword as ChangePassword};

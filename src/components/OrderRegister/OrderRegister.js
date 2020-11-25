@@ -47,7 +47,7 @@ class OrderRegister extends React.Component {
                         <div className="form-group">
                             <label>Nazwa</label>
                             <input
-                                name={"email"}
+                                name={"name"}
                                 ref={this.nameRef}
                                 type="text"
                                 className="form-control"

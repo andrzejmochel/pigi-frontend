@@ -19,11 +19,11 @@ module.exports = (req, res, next) => {
     }
 
     switch (req.url) {
-        case '/loginGoogle':
-        case '/loginFacebook':
+        case '/signin/google':
+        case '/signin/facebook':
             loginSSO(req);
             break
-        case '/login':
+        case '/signin':
             login(req);
             break
     }

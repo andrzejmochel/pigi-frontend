@@ -9,29 +9,26 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Register} from "./components/SignUp";
 import {OrderRegister} from "./components/OrderRegister";
 import {OrderRegisterSuccess} from "./components/OrderRegisterSuccess";
+import {LoginLogoutButton} from "./components/LoginLogoutButton";
+import {ChangePassword} from "./components/ChangePassword";
 
 
 export default function App() {
+
     return (
         <div className="App">
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
                 <div className="container">
                     <Link className="navbar-brand" to={"/login"}>Piggi</Link>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/login"}>Zaloguj</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/sign-up"}>Zarejstruj</Link>
-                            </li>
-                        </ul>
+                        <LoginLogoutButton />
                     </div>
                 </div>
             </nav>
 
             <Switch>
                 <PrivateRoute exact path="/" component={Home}/>
+                <PrivateRoute exact path="/change-password" component={ChangePassword}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/sign-up" component={Register}/>
                 <Route path="/order-register/:id" component={OrderRegister}/>
