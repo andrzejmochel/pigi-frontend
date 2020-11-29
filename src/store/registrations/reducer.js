@@ -3,7 +3,8 @@ import produce from "immer";
 
 const initialState = {
     isFetching: false,
-    registration: null
+    registration: null,
+    error: null
 }
 
 export default function asyncUserReducer(state = initialState, action) {
@@ -11,6 +12,7 @@ export default function asyncUserReducer(state = initialState, action) {
         case types.REGISTER_ORDER_REQUEST:
             return produce(state, (draftState) => {
                 draftState.isFetching = true
+                draftState.error = null
             });
         case types.REGISTER_ORDER_SUCCESS:
             return produce(state, (draftState) => {
@@ -18,10 +20,11 @@ export default function asyncUserReducer(state = initialState, action) {
                 draftState.isFetching = false;
 
             });
-        case types.ORDER_GET_FAILURE:
+        case types.REGISTER_ORDER_FAILURE:
             return produce(state, (draftState) => {
                 draftState.isFetching = false
-            });
+                draftState.error = action.payload.error
+               });
         default:
             return state;
     }

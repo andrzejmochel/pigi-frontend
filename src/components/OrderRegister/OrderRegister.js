@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {connect} from "react-redux";
 import {actions as orderActions} from '../../store/order'
 import {actions as registrationsActions} from '../../store/registrations'
+import ErrorNotification from "../ErrorNotification";
 
 class OrderRegister extends React.Component {
 
@@ -37,6 +38,7 @@ class OrderRegister extends React.Component {
     render() {
         const name = this.props.name;
         const description = this.props.description;
+        const error = this.props.error;
         return (
             <div className="auth-wrapper">
                 <div className="auth-inner">
@@ -44,6 +46,9 @@ class OrderRegister extends React.Component {
                         <h3>Zarejestruj się do zamówienia '{name}'</h3>
                         <p>{description}</p>
                         <p>Poniższe dane będą przechowywane tylko w ramach zamówienia.</p>
+                        {error &&
+                        <ErrorNotification description={error} />
+                        }
                         <div className="form-group">
                             <label>Nazwa</label>
                             <input
@@ -53,11 +58,12 @@ class OrderRegister extends React.Component {
                                 className="form-control"
                                 placeholder="Wprowadź nazwę zamawiającego"/>
                         </div>
-                        <div className="form-group">
-                            <label>Email</label>
+                        <div className="form-group required">
+                            <label className="control-label">Email</label>
                             <input
                                 name={"email"}
                                 ref={this.emailRef}
+                                required={true}
                                 type="email"
                                 className="form-control"
                                 placeholder="Wprowadź email kontaktowy"/>
@@ -82,12 +88,11 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-function mapStateToProps(state) {
+function getOrder(state) {
     if (state.order.order) {
         return {
             name: state.order.order.name,
             description: state.order.order.description,
-            link: state.order.order.link,
             id: state.order.order.id
         };
     } else {
@@ -97,6 +102,33 @@ function mapStateToProps(state) {
             id: ""
         };
     }
+}
+
+function getError(state) {
+    if(state.registrations.error) {
+        switch(state.registrations.error.response.status) {
+            case 400:
+                return "Wprowadzono niepoprawne dane"
+            case 404:
+                return "Wskazane zamówienie już nie istnieje"
+           default:
+                return "Błąd zapisu"
+        }
+    } else {
+        return null
+    }
+}
+
+function mapStateToProps(state) {
+
+    const order = getOrder(state);
+    const error = getError(state);
+
+    return {
+       ...order,
+       error : error
+    }
+
 }
 
 const connectedOrderRegister = connect(mapStateToProps, mapDispatchToProps)(OrderRegister);

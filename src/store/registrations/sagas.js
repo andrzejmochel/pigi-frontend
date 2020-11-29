@@ -12,7 +12,7 @@ function* registerOrderRequest(action) {
         yield put(actions.registerOrderSuccess(registration));
     } catch (e) {
         console.log(e)
-        yield put(actions.orderGetFailure(e));
+        yield put(actions.registerOrderFailure(e));
     }
 }
 

@@ -3,7 +3,7 @@ import {API_URL} from '../Url'
 
 class RegistrationsApiService {
     registerOrder(request) {
-        return api.httpPOST(`${API_URL}/registrations`, request, {});
+        return api.httpPOST(`${API_URL}/registration`, request, {});
     }
 }
 
