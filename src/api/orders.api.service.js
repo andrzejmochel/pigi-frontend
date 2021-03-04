@@ -3,7 +3,7 @@ import {API_URL} from '../Url'
 
 class OrdersApiService {
     getOrder(id) {
-        return api.httpGET(`${API_URL}/orders/${id}`, {}, {});
+        return api.httpGET(`${API_URL}/order/${id}`, {}, {});
     }
 }
 
