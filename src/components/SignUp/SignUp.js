@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {actions as signUpActions} from "../../store/signup"
 import GoogleLogin from "react-google-login";
 import {FACEBOOK_APP_ID, GOOGLE_CLIENT_ID} from "../../SSO";
-import FacebookLogin from "react-facebook-login"
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import {FaFacebook, FaGoogle} from "react-icons/all";
 
 class SignUp extends React.Component {
 
@@ -88,8 +89,8 @@ class SignUp extends React.Component {
                                    className="form-control"
                                    placeholder="Wprowadź hasło"/>
                         </div>
-                        <button type="submit" className="btn btn-primary btn-block">Zarejestruj się</button>
                         <div>
+                            <button type="submit" className="btn btn-primary btn-block">Zarejestruj się</button>
                             {googleButton}
                             {facebookButton}
                         </div>
@@ -108,8 +109,13 @@ class SignUp extends React.Component {
                              style={{}}
                              className="btn btn-primary btn-block"
                              buttonText={""}
+                             render={renderProps => (
+                                 <button className="btn btn-primary btn-block" onClick={renderProps.onClick}>
+                                     <FaGoogle/> Przez Google
+                                 </button>
+                             )}
         >
-            <span className="">Google</span>
+
         </GoogleLogin>);
     }
 
@@ -120,6 +126,9 @@ class SignUp extends React.Component {
                 autoLoad={true}
                 fields="email"
                 callback={this.facebookRegister}
+                render={renderProps => (
+                    <button className="btn btn-primary btn-block" onClick={renderProps.onClick}><FaFacebook/> Przez Facebook</button>
+                )}
             />);
         } catch (e) {
             return null;
