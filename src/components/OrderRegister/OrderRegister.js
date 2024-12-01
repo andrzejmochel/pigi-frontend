@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {actions as orderActions} from '../../store/order'
 import {actions as registrationsActions} from '../../store/registrations'
 import ErrorNotification from "../ErrorNotification";
+import parse from 'html-react-parser';
 
 class OrderRegister extends React.Component {
 
@@ -44,7 +45,7 @@ class OrderRegister extends React.Component {
                 <div className="auth-inner">
                     <form onSubmit={this.handleSubmit}>
                         <h3>Zarejestruj się do zamówienia '{name}'</h3>
-                        <p dangerouslySetInnerHTML={description} />
+                        <p>{parse(description)}</p>
                         <p>Poniższe dane będą przechowywane tylko w ramach zamówienia.</p>
                         {error &&
                         <ErrorNotification description={error} />
