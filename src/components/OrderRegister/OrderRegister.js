@@ -44,7 +44,7 @@ class OrderRegister extends React.Component {
                 <div className="auth-inner">
                     <form onSubmit={this.handleSubmit}>
                         <h3>Zarejestruj się do zamówienia '{name}'</h3>
-                        <p>{description}</p>
+                        <p dangerouslySetInnerHTML={description} />
                         <p>Poniższe dane będą przechowywane tylko w ramach zamówienia.</p>
                         {error &&
                         <ErrorNotification description={error} />
